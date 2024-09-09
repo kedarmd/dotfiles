@@ -63,6 +63,7 @@ disabled = false
 [os.symbols]
 Arch = ' '
 Fedora = '  '
+Ubuntu = '  '
 
 [shell]
 disabled = false
