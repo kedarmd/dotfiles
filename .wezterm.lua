@@ -11,6 +11,7 @@ config.font_size = 10.25
 config.line_height = 1.20
 config.cell_width = 1.05
 
+-- Window
 config.enable_tab_bar = false
 config.window_decorations = "RESIZE"
 
