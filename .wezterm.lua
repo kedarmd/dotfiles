@@ -15,4 +15,6 @@ config.cell_width = 1.05
 config.enable_tab_bar = false
 config.window_decorations = "RESIZE"
 
+-- TODO: Add padding related config here
+
 return config
