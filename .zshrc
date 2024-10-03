@@ -5,6 +5,10 @@ export NVM_DIR="$HOME/.nvm"
 export DENO_INSTALL="/home/kedarmd/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
+# Renders nerd font correctly in tmux
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 # Enables command history
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
