@@ -34,18 +34,18 @@ config.window_frame = {
 
 config.colors = {
 	tab_bar = {
-		background = "#1E1E1E", -- Background color of the tab bar
+		background = "#1E1E1E",
 		active_tab = {
-			bg_color = "#2A313C", -- Background color of the active tab
-			fg_color = "#FFFFFF", -- Text color of the active tab
+			bg_color = "#2A313C",
+			fg_color = "#FFFFFF",
 		},
 		inactive_tab = {
-			bg_color = "#14191A", -- Background color of inactive tabs
-			fg_color = "#AAAAAA", -- Text color of inactive tabs
+			bg_color = "#14191A",
+			fg_color = "#AAAAAA",
 		},
 		inactive_tab_hover = {
-			bg_color = "#252A2B", -- Background color when hovering over inactive tabs
-			fg_color = "#FFFFFF", -- Text color when hovering over inactive tabs
+			bg_color = "#252A2B",
+			fg_color = "#FFFFFF",
 		},
 	},
 }
