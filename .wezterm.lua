@@ -1,5 +1,5 @@
 local wezterm = require("wezterm")
-
+local act = wezterm.action
 local config = wezterm.config_builder()
 
 -- Color Scheme
@@ -16,6 +16,8 @@ config.hide_mouse_cursor_when_typing = false
 -- Window
 config.enable_tab_bar = false
 config.window_decorations = "RESIZE"
+config.enable_tab_bar = true
+config.hide_tab_bar_if_only_one_tab = true
 config.window_padding = {
 	left = 4,
 	right = 4,
@@ -24,5 +26,79 @@ config.window_padding = {
 }
 config.window_background_opacity = 0.9
 config.text_background_opacity = 1
+
+config.window_frame = {
+	active_titlebar_bg = "#2A303A",
+	inactive_titlebar_bg = "#282B30",
+}
+
+config.colors = {
+	tab_bar = {
+		background = "#1E1E1E", -- Background color of the tab bar
+		active_tab = {
+			bg_color = "#2A313C", -- Background color of the active tab
+			fg_color = "#FFFFFF", -- Text color of the active tab
+		},
+		inactive_tab = {
+			bg_color = "#14191A", -- Background color of inactive tabs
+			fg_color = "#AAAAAA", -- Text color of inactive tabs
+		},
+		inactive_tab_hover = {
+			bg_color = "#252A2B", -- Background color when hovering over inactive tabs
+			fg_color = "#FFFFFF", -- Text color when hovering over inactive tabs
+		},
+	},
+}
+
+-- KeyMaps
+config.leader = { key = "s", mods = "CTRL", timeout_milliseconds = 1000 } -- timeout_milliseconds defaults to 1000 and can be omitted
+config.keys = {
+	{ key = "0", mods = "CTRL", action = wezterm.action.ResetFontSize },
+	{
+		key = '"',
+		mods = "LEADER|SHIFT",
+		action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
+	},
+	{
+		key = "%",
+		mods = "LEADER|SHIFT",
+		action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
+	},
+	{
+		key = "z",
+		mods = "LEADER",
+		action = wezterm.action.TogglePaneZoomState,
+	},
+	{
+		key = "x",
+		mods = "LEADER",
+		action = wezterm.action.CloseCurrentPane({ confirm = true }),
+	},
+	{
+		key = "h",
+		mods = "LEADER",
+		action = act.ActivatePaneDirection("Left"),
+	},
+	{
+		key = "l",
+		mods = "LEADER",
+		action = act.ActivatePaneDirection("Right"),
+	},
+	{
+		key = "k",
+		mods = "LEADER",
+		action = act.ActivatePaneDirection("Up"),
+	},
+	{
+		key = "j",
+		mods = "LEADER",
+		action = act.ActivatePaneDirection("Down"),
+	},
+	{
+		key = "c",
+		mods = "LEADER",
+		action = act.SpawnTab("CurrentPaneDomain"),
+	},
+}
 
 return config
