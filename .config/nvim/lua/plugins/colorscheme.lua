@@ -37,6 +37,9 @@ return {
 		end,
 	},
 	{
-		"arcticicestudio/nord-vim",
+		"shaunsingh/nord.nvim",
+		config = function()
+			vim.g.nord_disable_background = true
+		end,
 	},
 }
