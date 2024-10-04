@@ -32,6 +32,7 @@ config.window_frame = {
 	inactive_titlebar_bg = "#282B30",
 }
 
+-- Custom Colors that were not covered in color scheme (Mainly tab)
 config.colors = {
 	tab_bar = {
 		background = "#1E1E1E",
@@ -93,6 +94,26 @@ config.keys = {
 		key = "j",
 		mods = "LEADER",
 		action = act.ActivatePaneDirection("Down"),
+	},
+	{
+		key = "LeftArrow",
+		mods = "LEADER",
+		action = act.AdjustPaneSize({ "Left", 5 }),
+	},
+	{
+		key = "RightArrow",
+		mods = "LEADER",
+		action = act.AdjustPaneSize({ "Right", 5 }),
+	},
+	{
+		key = "UpArrow",
+		mods = "LEADER",
+		action = act.AdjustPaneSize({ "Up", 5 }),
+	},
+	{
+		key = "DownArrow",
+		mods = "LEADER",
+		action = act.AdjustPaneSize({ "Down", 5 }),
 	},
 	{
 		key = "c",
