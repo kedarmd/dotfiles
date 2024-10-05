@@ -6,8 +6,8 @@ export DENO_INSTALL="/home/kedarmd/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
 # Renders nerd font correctly in tmux
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
+# export LANG=en_US.UTF-8
+# export LC_ALL=en_US.UTF-8
 
 # Enables command history
 HISTFILE=~/.zsh_history
@@ -20,3 +20,4 @@ eval "$(starship init zsh)"
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 export PATH=$HOME/.local/bin:$PATH
+export PATH="$PATH:/opt/nvim-linux64/bin"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOTFILES_DIR=~/work/dotfiles
+DOTFILES_DIR=~/development/dotfiles
 
 ln -sf $DOTFILES_DIR/.zshrc ~/.zshrc
 ln -sf $DOTFILES_DIR/.tmux.conf ~/.tmux.conf
