@@ -7,7 +7,7 @@ config.color_scheme = "nord"
 
 -- Font
 config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "Regular" })
-config.font_size = 10.25
+config.font_size = 10
 config.line_height = 1.20
 config.cell_width = 1.05
 
@@ -17,7 +17,6 @@ config.hide_mouse_cursor_when_typing = false
 config.enable_tab_bar = false
 config.window_decorations = "RESIZE"
 config.enable_tab_bar = true
-config.hide_tab_bar_if_only_one_tab = true
 config.window_padding = {
 	left = 4,
 	right = 4,
