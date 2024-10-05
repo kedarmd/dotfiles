@@ -1,6 +1,10 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
-local config = wezterm.config_builder()
+local config = {} --wezterm.config_builder()
+
+if wezterm.config_builder then
+	config = wezterm.config_builder()
+end
 
 -- Color Scheme
 config.color_scheme = "nord"
@@ -26,15 +30,15 @@ config.window_padding = {
 config.window_background_opacity = 0.9
 config.text_background_opacity = 1
 
-config.window_frame = {
-	active_titlebar_bg = "#2A303A",
-	inactive_titlebar_bg = "#282B30",
-}
+-- config.window_frame = {
+-- 	active_titlebar_bg = "#1C212A",
+-- 	inactive_titlebar_bg = "#282B30",
+-- }
 
 -- Custom Colors that were not covered in color scheme (Mainly tab)
 config.colors = {
 	tab_bar = {
-		background = "#1E1E1E",
+		background = "#1C212A",
 		active_tab = {
 			bg_color = "#2A313C",
 			fg_color = "#FFFFFF",
@@ -120,5 +124,29 @@ config.keys = {
 		action = act.SpawnTab("CurrentPaneDomain"),
 	},
 }
+
+config.use_fancy_tab_bar = false
+
+wezterm.on("update-right-status", function(window, _)
+	local SOLID_LEFT_ARROW = ""
+	local ARROW_FG = { Foreground = { Color = "#C6A0F6" } }
+	local prefix = ""
+
+	if window:leader_is_active() then
+		prefix = " " .. utf.char(0x1F30A)
+		SOLID_LEFT_ARROW = utf.char(0xE0B2)
+	end
+
+	if window:active_tab():tab_id() ~= 0 then
+		ARROW_FG = { Foreground = { Color = "#1E2030" } }
+	end
+
+	window:set_left_status(wezterm.format({
+		{ Background = { Color = "#B7BDF8" } },
+		{ Text = prefix },
+		ARROW_FG,
+		{ Text = SOLID_LEFT_ARROW },
+	}))
+end)
 
 return config
