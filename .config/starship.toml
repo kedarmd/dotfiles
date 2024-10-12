@@ -61,9 +61,9 @@ style = "fg:#2e3440 bg:#5e81ac"
 disabled = false
 
 [os.symbols]
-Arch = ' '
+Arch = '  '
 Fedora = '  '
-Ubuntu = '  '
+Ubuntu = '  '
 Macos = '  '
 
 [shell]
