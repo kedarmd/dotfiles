@@ -7,7 +7,7 @@ if wezterm.config_builder then
 end
 
 -- Color Scheme
-config.color_scheme = "nord"
+config.color_scheme = "Tokyo Night"
 
 -- Font
 config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "Regular" })
@@ -27,6 +27,7 @@ config.window_padding = {
 	top = 0,
 	bottom = 0,
 }
+
 -- config.window_background_opacity = 0.9
 -- config.text_background_opacity = 1
 

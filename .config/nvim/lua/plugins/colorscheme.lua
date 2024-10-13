@@ -37,9 +37,9 @@ return {
 		end,
 	},
 	{
-		"shaunsingh/nord.nvim",
+		"arcticicestudio/nord-vim",
 		config = function()
-			vim.g.nord_disable_background = true
+			vim.cmd.colorscheme("nord")
 		end,
 	},
 }
