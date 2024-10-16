@@ -7,13 +7,13 @@ if wezterm.config_builder then
 end
 
 -- Color Scheme
-config.color_scheme = "Tokyo Night"
+config.color_scheme = "Catppuccin Mocha"
 
 -- Font
 config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "Regular" })
-config.font_size = 10
+config.font_size = 10.5
 config.line_height = 1.20
--- config.cell_width = 1.05
+config.cell_width = 1.05
 
 config.hide_mouse_cursor_when_typing = false
 
@@ -81,22 +81,22 @@ config.keys = {
 	},
 	{
 		key = "h",
-		mods = "LEADER",
+		mods = "CTRL",
 		action = act.ActivatePaneDirection("Left"),
 	},
 	{
 		key = "l",
-		mods = "LEADER",
+		mods = "CTRL",
 		action = act.ActivatePaneDirection("Right"),
 	},
 	{
 		key = "k",
-		mods = "LEADER",
+		mods = "CTRL",
 		action = act.ActivatePaneDirection("Up"),
 	},
 	{
 		key = "j",
-		mods = "LEADER",
+		mods = "CTRL",
 		action = act.ActivatePaneDirection("Down"),
 	},
 	{
@@ -123,6 +123,16 @@ config.keys = {
 		key = "c",
 		mods = "LEADER",
 		action = act.SpawnTab("CurrentPaneDomain"),
+	},
+	{
+		key = "p",
+		mods = "LEADER",
+		action = act.ActivateTabRelative(-1),
+	},
+	{
+		key = "n",
+		mods = "LEADER",
+		action = act.ActivateTabRelative(1),
 	},
 }
 
