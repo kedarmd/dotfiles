@@ -1,16 +1,3 @@
-local os_logo = function()
-	local os_name = vim.loop.os_uname().sysname
-	if os_name == "Linux" then
-		return "" -- Linux icon
-	elseif os_name == "Darwin" then
-		return "" -- macOS icon
-	elseif os_name == "Windows" then
-		return "" -- Windows icon
-	else
-		return "" -- Fallback icon
-	end
-end
-
 return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -25,7 +12,20 @@ return {
 				},
 				lualine_x = {},
 				lualine_y = { "filetype" },
-				lualine_z = { os_logo },
+				lualine_z = {
+					{
+						"fileformat",
+						symbols = {
+							unix = "", -- e712
+							dos = "", -- e70f
+							mac = "", -- e711
+						},
+					},
+				},
+			},
+			options = {
+				section_separators = { left = "", right = "" },
+				component_separators = { left = "", right = "" },
 			},
 		})
 	end,
