@@ -26,3 +26,4 @@ eval "$(zoxide init zsh)"
 # Alias
 alias lg="lazygit"
 alias cd="z"
+alias kmdot="node ~/development/dotfiles/kmdot.js"

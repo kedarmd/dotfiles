@@ -1,5 +1,8 @@
+import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
+
+const THEME_NAMES = ['catppuccin', 'nord', 'onedark', 'tokyonight'];
 
 // Function to update Neovim theme
 function setNvimTheme(theme) {
@@ -92,8 +95,8 @@ const _getCurrentTheme = () => {
 function main() {
     const theme = process.argv[2];
 
-    if (!theme) {
-        console.log("Usage: node script.js <theme>");
+    if (!theme || !THEME_NAMES.includes(theme)) {
+        console.log(`Usage: kmdot < ${THEME_NAMES.join(' | ')} >`);
         process.exit(1);
     }
 
