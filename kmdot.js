@@ -1,4 +1,3 @@
-import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
@@ -84,7 +83,7 @@ const parseStateData = (data) => {
     }
 }
 
-const _getCurrentTheme = () => {
+export const getCurrentTheme = () => {
     const statePath = path.join(process.env.HOME, 'development', 'dotfiles') + '/state.json';
     const data = fs.readFileSync(statePath, 'utf8')
     const theme = parseStateData(data)?.currentTheme;
