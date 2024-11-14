@@ -7,7 +7,8 @@ if wezterm.config_builder then
 end
 
 -- Color Scheme
-config.color_scheme = "Catppuccin Mocha"
+local themefile = dofile(wezterm.config_dir .. "/development/dotfiles/wezterm-theme.lua")
+config.color_scheme = themefile
 
 -- Font
 config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "Regular" })

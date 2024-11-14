@@ -10,7 +10,7 @@ set_nvim_theme() {
 # Function to update Starship configuration
 set_starship_theme() {
     local theme="$1"
-    local starship_local_config_dir="$HOME/development/dotfiles/config/starship"
+    local starship_local_config_dir="$HOME/development/dotfiles/themes/starship"
     local starship_config_dir="$HOME/.config/"
     local starship_theme_file="$starship_local_config_dir/${theme}.toml"
 

@@ -21,3 +21,8 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 export PATH=$HOME/.local/bin:$PATH
 export PATH="$PATH:/opt/nvim-linux64/bin"
+eval "$(zoxide init zsh)"
+
+# Alias
+alias lg="lazygit"
+alias cd="z"

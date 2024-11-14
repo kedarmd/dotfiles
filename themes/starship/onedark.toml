@@ -1,0 +1,96 @@
+format = """
+$os$username(bg:#282c34 fg:#abb2bf)\
+[](bg:#61afef fg:#282c34)\
+$directory\
+[](bg:#98c379 fg:#61afef)\
+$git_branch$git_status\
+[](bg:#e06c75 fg:#98c379)\
+$deno\
+$golang\
+$lua\
+$nodejs\
+[ ](fg:#e06c75)\
+"""
+
+# GIT
+# ===
+
+[git_branch]
+format = "[ $symbol$branch(:$remote_branch) ]($style)"
+symbol = "󰘬 "
+style = "fg:#282c34 bg:#98c379"
+
+[git_status]
+style = "fg:#282c34 bg:#98c379"
+format = '[($all_status$ahead_behind )]($style)'
+
+# LANGUAGES
+# =========
+
+[lua]
+symbol = '󰢱 '
+format = '[ $symbol($version )]($style)'
+style = "fg:#282c34 bg:#e06c75"
+
+[golang]
+symbol = '󰟓 '
+format = '[ $symbol($version )]($style)'
+style = "fg:#282c34 bg:#e06c75"
+
+[deno]
+symbol = ' '
+format = '[ $symbol($version )]($style)'
+style = "fg:#282c34 bg:#e06c75"
+
+[nodejs]
+symbol = ' '
+format = "[ $symbol($version )]($style)"
+style = "fg:#282c34 bg:#e06c75"
+
+# MISC
+# ====
+
+[hostname]
+ssh_only = false
+style = "fg:#282c34 bg:#282c34"
+format = "[$ssh_symbol$hostname ]($style)"
+ssh_symbol = " "
+
+[os]
+style = "fg:#abb2bf bg:#282c34"
+disabled = false
+
+[os.symbols]
+Arch = '  '
+Fedora = '  '
+Ubuntu = '  '
+Macos = '  '
+
+[shell]
+disabled = false
+
+[username]
+show_always = true
+format = '[$user ]($style)'
+style_user = "fg:#abb2bf bg:#282c34"
+
+[directory]
+style = "fg:#282c34 bg:#61afef"
+read_only = " "
+format = "[ 󰉋 $path ]($style)[$read_only]($read_only_style)"
+read_only_style = "fg:#282c34 bold bg:#61afef"
+
+[sudo]
+disabled = false
+symbol = " "
+style = "fg:#282c34 bg:#abb2bf"
+format = "[ $symbol]($style)"
+
+[cmd_duration]
+format = "[ 󰔚 $duration ]($style)"
+style = "fg:#282c34 bg:#abb2bf"
+
+[character]
+success_symbol = "[ 󱞩](bold green)"
+error_symbol = "[ 󱞩](bold red)"
+vimcmd_symbol = "[  󱞩](bold green)"
