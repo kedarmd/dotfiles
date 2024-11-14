@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const THEME_NAMES = ['catppuccin', 'nord', 'onedark', 'tokyonight'];
+const THEME_NAMES = ['catppuccin', 'nord', 'nordic', 'onedark', 'tokyonight'];
 
 // Function to update Neovim theme
 function setNvimTheme(theme) {

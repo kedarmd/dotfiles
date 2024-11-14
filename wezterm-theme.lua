@@ -1,1 +1,1 @@
-return "Catppuccin Mocha"
+return "Tokyo Night Storm"
