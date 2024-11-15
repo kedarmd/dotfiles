@@ -6,9 +6,9 @@ const THEME_NAMES = ['catppuccin', 'nord', 'nordic', 'onedark', 'tokyonight'];
 // Function to update Neovim theme
 function setNvimTheme(theme) {
     try {
-        const target = path.join(process.env.HOME, '.config', 'nvim', 'lua', 'plugins') + '/colorscheme.lua';
-        const nvimThemesDir = path.join(process.env.HOME, 'development', 'dotfiles', 'themes', 'nvim/');
-        const source = nvimThemesDir + theme + '.lua';
+        const target = path.join(process.env.HOME, 'development', 'dotfiles', 'config', 'nvim', 'lua', 'plugins') + '/colorscheme.lua';
+        const nvimThemesDir = path.join(process.env.HOME, 'development', 'dotfiles', 'themes', 'nvim');
+        const source = `${nvimThemesDir}/${theme}.lua`;
         setThemeCallback(theme, source, target, 'Neovim');
     } catch (error) {
         console.error(`Failed to set Neovim theme: ${error.message}`);
@@ -17,13 +17,22 @@ function setNvimTheme(theme) {
 
 function setStarshipTheme(theme) {
     try {
-        const target = path.join(process.env.HOME, '.config') + '/starship.toml';
-        const starshipThemesDir = path.join(process.env.HOME, 'development', 'dotfiles', 'themes', 'starship/');
-        const source = starshipThemesDir + theme + '.toml';
+        const target = path.join(process.env.HOME, 'development', 'dotfiles', 'config') + '/starship.toml';
+        const starshipThemesDir = path.join(process.env.HOME, 'development', 'dotfiles', 'themes', 'starship');
+        const source = `${starshipThemesDir}/${theme}.toml`;
         setThemeCallback(theme, source, target, 'Starship');
     } catch (error) {
         console.error(`Failed to set Neovim theme: ${error.message}`);
     }
+}
+
+function updateWeztermTheme(theme) {
+    const target = path.join(process.env.HOME, 'development', 'dotfiles') + '/wezterm-theme.lua';
+    const wezterFilePath = path.join(process.env.HOME, 'development', 'dotfiles') + '/wezterm.lua';
+    const weztermThemesDir = path.join(process.env.HOME, 'development', 'dotfiles', 'themes', 'wezterm');
+    const source = `${weztermThemesDir}/${theme}.lua`;
+    setThemeCallback(theme, source, target);
+    setThemeCallback(theme, wezterFilePath, wezterFilePath, 'Wezterm');
 }
 
 function setThemeCallback(theme, sourcePath, targetPath, config) {
@@ -44,15 +53,6 @@ function setThemeCallback(theme, sourcePath, targetPath, config) {
     } catch (error) {
         console.error(`Failed to set ${config} theme: ${error.message}`);
     }
-}
-
-function updateWeztermTheme(theme) {
-    const target = path.join(process.env.HOME, 'development', 'dotfiles') + '/wezterm-theme.lua';
-    const wezterFilePath = path.join(process.env.HOME, 'development', 'dotfiles') + '/wezterm.lua';
-    const starshipThemesDir = path.join(process.env.HOME, 'development', 'dotfiles', 'themes', 'wezterm/');
-    const source = starshipThemesDir + theme + '.lua';
-    setThemeCallback(theme, source, target);
-    setThemeCallback(theme, wezterFilePath, wezterFilePath, 'Wezterm');
 }
 
 function updateState(theme) {
