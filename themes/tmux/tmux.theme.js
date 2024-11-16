@@ -2,6 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
 
+/**
+ * Function to update TMUX theme
+ * @param {string} theme
+ * @param {(theme: string, source: string, targetPath: string, config?: string, callback?: () => void)=> void} setThemeCallback
+ * @returns {void}
+*/
 export function setTmuxTheme(theme) {
     const startMarker = '# Theme';
     const endMarker = '# End of theme setup';

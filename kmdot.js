@@ -1,15 +1,19 @@
 import fs from 'fs';
 import path from 'path';
-import {
-    setNvimTheme,
-    setStarshipTheme,
-    setTmuxTheme,
-    setWeztermTheme,
-} from './themes/index.js';
+import { setNvimTheme, setStarshipTheme, setTmuxTheme, setWeztermTheme } from './themes/index.js';
 
 const THEME_NAMES = ['catppuccin', 'nord', 'nordic', 'onedark', 'tokyonight'];
 
-function setTheme(theme, sourcePath, targetPath, config, cb) {
+/**
+ * Generic function to update theme of different configs
+ * @param {string} theme - The new theme to be applied
+ * @param {string} sourcePath - The path of source file in the dotfiles
+ * @param {string} targetPath - The path of target file in the dotfiles
+ * @param {string} config - the config to be updated
+ * @param {Function} cb - Callback function to perform config specific operation after updating the theme
+ * @returns {void}
+ */
+function setTheme(theme, sourcePath, targetPath, config = undefined, cb = undefined) {
     try {
         fs.readFile(sourcePath, 'utf8', (err, data) => {
             if (err) {
@@ -30,6 +34,11 @@ function setTheme(theme, sourcePath, targetPath, config, cb) {
     }
 }
 
+/**
+ * The fuction to update the local state file
+ * @param {string} theme - The new theme to be applied 
+ * @returns {void} 
+ */
 function updateState(theme) {
     const statePath = path.join(process.env.HOME, 'development', 'dotfiles') + '/state.json';
     fs.readFile(statePath, 'utf8', (err, data) => {

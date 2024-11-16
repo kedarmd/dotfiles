@@ -1,7 +1,12 @@
 import path from 'path';
 import { exec } from 'child_process';
 
-// Function to update Neovim theme
+/**
+ * Function to update Neovim theme
+ * @param {string} theme
+ * @param {(theme: string, source: string, targetPath: string, config?: string, callback?: () => void)=> void} setThemeCallback
+ * @returns {void} 
+*/
 export function setNvimTheme(theme, setThemeCallback) {
     try {
         console.log('inside setNvimTheme function')
