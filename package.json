@@ -1,0 +1,11 @@
+{
+  "name": "dotfiles",
+  "version": "1.0.0",
+  "description": "These are my personalised dotfiles. Most of the configs are inspired from some of the famous public dotfiles. Right now it has *neovim, starship, tmux, & zsh* configs",
+  "main": "kmdot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
