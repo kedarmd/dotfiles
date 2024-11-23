@@ -64,7 +64,6 @@ keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
 keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
 
 vim.opt.number = true
-
 local currentValue = true
 local function toggle_relative_number()
 	vim.opt.relativenumber = not currentValue

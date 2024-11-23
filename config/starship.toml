@@ -4,12 +4,12 @@ $os$username(bg:#313244 fg:#2e3440)\
 $directory\
 [](bg:#94e2d5 fg:#74c7ec)\
 $git_branch$git_status\
-[](bg:#eba0ac  fg:#94e2d5)\
+[](bg:#cba6f7  fg:#94e2d5)\
 $deno\
 $golang\
 $lua\
 $nodejs\
-[ ](fg:#eba0ac)\
+[ ](fg:#cba6f7)\
 """
 
 # GIT
@@ -30,22 +30,22 @@ format = '[($all_status$ahead_behind )]($style)'
 [lua]
 symbol = '󰢱 '
 format = '[ $symbol($version )]($style)'
-style = "fg:#2e3440 bg:#eba0ac"
+style = "fg:#2e3440 bg:#cba6f7"
 
 [golang]
 symbol = '󰟓 '
 format = '[ $symbol($version )]($style)'
-style = "fg:#2e3440 bg:#eba0ac"
+style = "fg:#2e3440 bg:#cba6f7"
 
 [deno]
 symbol = ' '
 format = '[ $symbol($version )]($style)'
-style = "fg:#2e3440 bg:#eba0ac"
+style = "fg:#2e3440 bg:#cba6f7"
 
 [nodejs]
 symbol = ' '
 format = "[ $symbol($version )]($style)"
-style = "fg:#2e3440 bg:#eba0ac"
+style = "fg:#2e3440 bg:#cba6f7"
 
 # MISC
 # ====
