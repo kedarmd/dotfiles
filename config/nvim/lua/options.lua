@@ -12,9 +12,6 @@ vim.g.have_nerd_font = true
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = "a"
 
-vim.opt.number = true
-vim.opt.relativenumber = true
-
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
 vim.opt.timeoutlen = 300
@@ -65,6 +62,15 @@ keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
 keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
 keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
 keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
+
+vim.opt.number = true
+
+local currentValue = true
+local function toggle_relative_number()
+	vim.opt.relativenumber = not currentValue
+	currentValue = vim.wo.relativenumber
+end
+keymap.set("n", "<leader>tl", toggle_relative_number, { desc = "[T]oggle relatived [L]ine Numbers" })
 
 keymap.set("n", "<ESC>", ":nohl<CR>", { desc = "Clear search highlights" })
 
