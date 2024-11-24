@@ -194,7 +194,7 @@ end
 
 wezterm.on("update-right-status", function(window)
 	-- Get the current date in the desired format
-	local date = wezterm.strftime("%d-%m-%Y %I:%M %p") -- Indian date format with 12-hour time
+	local date = wezterm.strftime("%d %b %Y - %I:%M %p") -- Indian date format with 12-hour time
 	-- Set it as the right status
 	local pane = window:active_pane()
 	local title = pane:get_title()
