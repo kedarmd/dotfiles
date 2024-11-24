@@ -64,10 +64,11 @@ keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
 keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
 
 vim.opt.number = true
-local currentValue = true
+local default_relative_line_value = true
+vim.opt.relativenumber = default_relative_line_value
 local function toggle_relative_number()
-	vim.opt.relativenumber = not currentValue
-	currentValue = vim.wo.relativenumber
+	vim.opt.relativenumber = not default_relative_line_value
+	default_relative_line_value = vim.wo.relativenumber
 end
 keymap.set("n", "<leader>tl", toggle_relative_number, { desc = "[T]oggle relatived [L]ine Numbers" })
 
