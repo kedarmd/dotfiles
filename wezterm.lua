@@ -21,7 +21,6 @@ config.hide_mouse_cursor_when_typing = false
 -- Window
 config.enable_tab_bar = true
 config.window_decorations = "RESIZE"
--- config.enable_tab_bar = true
 config.window_padding = {
 	left = 4,
 	right = 4,
@@ -176,19 +175,21 @@ local function get_styled_icon(icon, color)
 	return styled_icon
 end
 
-local function get_battery_icon(state)
+local function get_battery_icon(state, status)
 	if state < 20 then
-		return get_styled_icon("󰁻", "Red")
+		return get_styled_icon(status == "Charging" and "󰂄" or "󰁻", status == "Charging" and "Green" or "Red")
 	elseif state < 40 then
-		return get_styled_icon("󰁽", "Yellow")
+		return get_styled_icon(status == "Charging" and "󰂄" or "󰁽", status == "Charging" and "Green" or "Yellow")
 	elseif state < 60 then
-		return "󰁿"
+		return get_styled_icon(status == "Charging" and "󰂄" or "󰁾", status == "Charging" and "Green" or "White")
 	elseif state < 80 then
-		return "󰂁"
+		return get_styled_icon(status == "Charging" and "󰂄" or "󰂁", status == "Charging" and "Green" or "White")
 	elseif state < 90 then
-		return "󰂂"
+		return get_styled_icon(status == "Charging" and "󰂄" or "󰂂", status == "Charging" and "Green" or "White")
+	elseif state == 100 then
+		return get_styled_icon("󰂄", "Green")
 	else
-		return get_styled_icon("󰁹", "Blue")
+		return get_styled_icon(status == "Charging" and "󰂄" or "󰁹", status == "Charging" and "Green" or "Blue")
 	end
 end
 
@@ -206,13 +207,8 @@ wezterm.on("update-right-status", function(window)
 		local state = battery.state_of_charge * 100
 		local status = battery.state
 
-		-- Format the battery status
-		if status == "Charging" then
-			battery_status = string.format("%s %.0f%%", get_styled_icon("󰂄", "Green"), state)
-		else
-			local battery_icon = get_battery_icon(state)
-			battery_status = string.format("%s %.0f%%", battery_icon, state)
-		end
+		local battery_icon = get_battery_icon(state, status)
+		battery_status = string.format("%s %.0f%%", battery_icon, state)
 	else
 		battery_status = "No Battery"
 	end
