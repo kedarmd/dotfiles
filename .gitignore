@@ -1,1 +1,2 @@
 .luarc.json
+config/nvim/lua/plugins/codeium.lua
