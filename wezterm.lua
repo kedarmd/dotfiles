@@ -165,4 +165,47 @@ wezterm.on("format-tab-title", function(tab)
 	return tab.tab_title
 end)
 
+local function get_battery_icon(state)
+	if state < 20 then
+		return "󰁻"
+	elseif state < 40 then
+		return "󰁽"
+	elseif state < 60 then
+		return "󰁿"
+	elseif state < 80 then
+		return "󰂁"
+	elseif state < 90 then
+		return "󰂂"
+	else
+		return "󰁹"
+	end
+end
+
+wezterm.on("update-right-status", function(window)
+	-- Get the current date in the desired format
+	local date = wezterm.strftime("%d-%m-%Y %I:%M %p") -- Indian date format with 12-hour time
+	-- Set it as the right status
+	local pane = window:active_pane()
+	local title = pane:get_title()
+	local battery_info = wezterm.battery_info()
+	local battery_status = ""
+
+	if #battery_info > 0 then
+		local battery = battery_info[1] -- Assuming single battery; use a loop if multiple.
+		local state = battery.state_of_charge * 100
+		local status = battery.state
+
+		-- Format the battery status
+		if status == "Charging" then
+			battery_status = string.format("󰂄 %.0f%%", state)
+		else
+			local battery_icon = get_battery_icon(state)
+			battery_status = string.format("%s %.0f%%", battery_icon, state)
+		end
+	else
+		battery_status = "No Battery"
+	end
+	window:set_right_status(battery_status .. " | " .. title .. " | " .. date)
+end)
+
 return config
