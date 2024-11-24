@@ -165,11 +165,22 @@ wezterm.on("format-tab-title", function(tab)
 	return tab.tab_title
 end)
 
+local function get_styled_battery_icon(icon, color)
+	local styled_icon = string.format(
+		"%s",
+		wezterm.format({
+			{ Foreground = { AnsiColor = color } },
+			{ Text = icon },
+		})
+	)
+	return styled_icon
+end
+
 local function get_battery_icon(state)
 	if state < 20 then
-		return "󰁻"
+		return get_styled_battery_icon("󰁻", "Red")
 	elseif state < 40 then
-		return "󰁽"
+		return get_styled_battery_icon("󰁽", "Yellow")
 	elseif state < 60 then
 		return "󰁿"
 	elseif state < 80 then
@@ -177,7 +188,7 @@ local function get_battery_icon(state)
 	elseif state < 90 then
 		return "󰂂"
 	else
-		return "󰁹"
+		return get_styled_battery_icon("󰁹", "Blue")
 	end
 end
 
@@ -197,7 +208,7 @@ wezterm.on("update-right-status", function(window)
 
 		-- Format the battery status
 		if status == "Charging" then
-			battery_status = string.format("󰂄 %.0f%%", state)
+			battery_status = string.format("%s %.0f%%", get_styled_battery_icon("󰂄", "Green"), state)
 		else
 			local battery_icon = get_battery_icon(state)
 			battery_status = string.format("%s %.0f%%", battery_icon, state)
@@ -205,7 +216,8 @@ wezterm.on("update-right-status", function(window)
 	else
 		battery_status = "No Battery"
 	end
-	window:set_right_status(battery_status .. " | " .. title .. " | " .. date)
+	local final_Status = string.format("%s | %s | %s ", title, battery_status, date)
+	window:set_right_status(final_Status)
 end)
 
 return config
