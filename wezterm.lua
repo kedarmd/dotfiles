@@ -190,11 +190,22 @@ local function get_battery_icon(state, status)
 	end
 end
 
-local function get_status_field(text, background)
+local function get_status_field(text, background, prefix_background)
+	local prefix_styles = wezterm.format({
+		{ Foreground = { AnsiColor = background } },
+		{ Text = "" },
+	})
+	if prefix_background ~= nil then
+		prefix_styles = wezterm.format({
+			{ Background = { AnsiColor = prefix_background } },
+			{ Foreground = { AnsiColor = background } },
+			{ Text = "" },
+		})
+	end
 	return string.format(
-		"%s",
+		"%s%s",
+		prefix_styles,
 		wezterm.format({
-
 			{ Background = { AnsiColor = background } },
 			{ Foreground = { AnsiColor = "Black" } },
 			{ Text = " " .. text .. " " },
@@ -204,13 +215,13 @@ end
 
 wezterm.on("update-right-status", function(window)
 	-- Get the current date in the desired format
-	local date = get_status_field(wezterm.strftime("%d %b %Y - %I:%M %p"), "Red") -- Indian date format with 12-hour time
+	local date = get_status_field(wezterm.strftime("%d %b %Y - %I:%M %p"), "Red", "Green") -- Indian date format with 12-hour time
 	-- Set it as the right status
 	local pane = window:active_pane()
-	local title = get_status_field(pane:get_title(), "Green")
+	local title = get_status_field(pane:get_title(), "Green", "Blue")
 	local battery_info = wezterm.battery_info()
 	local battery_status = ""
-	local workspace = get_status_field(window:active_workspace(), "Blue")
+	local workspace = get_status_field(window:active_workspace(), "Blue", "Black")
 
 	if #battery_info > 0 then
 		local battery = battery_info[1] -- Assuming single battery; use a loop if multiple.
