@@ -1,6 +1,7 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 local config = {} --wezterm.config_builder()
+local nvim_wez_navigator = require("plugins/nvim-wez-navigator")
 
 if wezterm.config_builder then
 	config = wezterm.config_builder()
@@ -36,25 +37,6 @@ config.window_padding = {
 -- 	inactive_titlebar_bg = "#282B30",
 -- }
 
--- Custom Colors that were not covered in color scheme (Mainly tab)
--- config.colors = {
--- 	tab_bar = {
--- 		background = "#1C212A",
--- 		active_tab = {
--- 			bg_color = "#2A313C",
--- 			fg_color = "#FFFFFF",
--- 		},
--- 		inactive_tab = {
--- 			bg_color = "#14191A",
--- 			fg_color = "#AAAAAA",
--- 		},
--- 		inactive_tab_hover = {
--- 			bg_color = "#252A2B",
--- 			fg_color = "#FFFFFF",
--- 		},
--- 	},
--- }
-
 -- KeyMaps
 config.leader = { key = "s", mods = "CTRL", timeout_milliseconds = 1000 } -- timeout_milliseconds defaults to 1000 and can be omitted
 config.keys = {
@@ -78,26 +60,6 @@ config.keys = {
 		key = "x",
 		mods = "LEADER",
 		action = wezterm.action.CloseCurrentPane({ confirm = true }),
-	},
-	{
-		key = "h",
-		mods = "ALT",
-		action = act.ActivatePaneDirection("Left"),
-	},
-	{
-		key = "l",
-		mods = "ALT",
-		action = act.ActivatePaneDirection("Right"),
-	},
-	{
-		key = "k",
-		mods = "ALT",
-		action = act.ActivatePaneDirection("Up"),
-	},
-	{
-		key = "j",
-		mods = "ALT",
-		action = act.ActivatePaneDirection("Down"),
 	},
 	{
 		key = "LeftArrow",
@@ -139,6 +101,37 @@ config.keys = {
 		mods = "ALT",
 		action = act.ToggleFullScreen,
 	},
+	{
+		key = "s",
+		mods = "LEADER",
+		action = act.ShowLauncherArgs({
+			flags = "FUZZY|WORKSPACES",
+		}),
+	},
+	{
+		key = "w",
+		mods = "LEADER",
+		action = act.PromptInputLine({
+			description = wezterm.format({
+				{ Attribute = { Intensity = "Bold" } },
+				{ Foreground = { AnsiColor = "Fuchsia" } },
+				{ Text = "Enter name for new workspace" },
+			}),
+			action = wezterm.action_callback(function(window, pane, line)
+				-- line will be `nil` if they hit escape without entering anything
+				-- An empty string if they just hit enter
+				-- Or the actual line of text they wrote
+				if line then
+					window:perform_action(
+						act.SwitchToWorkspace({
+							name = line,
+						}),
+						pane
+					)
+				end
+			end),
+		}),
+	},
 	{ key = "1", mods = "LEADER", action = act.ActivateTab(0) },
 	{ key = "2", mods = "LEADER", action = act.ActivateTab(1) },
 	{ key = "3", mods = "LEADER", action = act.ActivateTab(2) },
@@ -150,8 +143,12 @@ config.keys = {
 	{ key = "9", mods = "LEADER", action = act.ActivateTab(8) },
 	{ key = "l", mods = "LEADER", action = act.ActivateLastTab },
 }
+for _, keybinding in ipairs(nvim_wez_navigator.keybindings()) do
+	table.insert(config.keys, keybinding)
+end
 
 config.use_fancy_tab_bar = false
+config.tab_max_width = 60
 -- Function to extract and format tab titles
 wezterm.on("format-tab-title", function(tab)
 	local active_pane = tab.active_pane
@@ -193,14 +190,27 @@ local function get_battery_icon(state, status)
 	end
 end
 
+local function get_status_field(text, background)
+	return string.format(
+		"%s",
+		wezterm.format({
+
+			{ Background = { AnsiColor = background } },
+			{ Foreground = { AnsiColor = "Black" } },
+			{ Text = " " .. text .. " " },
+		})
+	)
+end
+
 wezterm.on("update-right-status", function(window)
 	-- Get the current date in the desired format
-	local date = wezterm.strftime("%d %b %Y - %I:%M %p") -- Indian date format with 12-hour time
+	local date = get_status_field(wezterm.strftime("%d %b %Y - %I:%M %p"), "Red") -- Indian date format with 12-hour time
 	-- Set it as the right status
 	local pane = window:active_pane()
-	local title = pane:get_title()
+	local title = get_status_field(pane:get_title(), "Green")
 	local battery_info = wezterm.battery_info()
 	local battery_status = ""
+	local workspace = get_status_field(window:active_workspace(), "Blue")
 
 	if #battery_info > 0 then
 		local battery = battery_info[1] -- Assuming single battery; use a loop if multiple.
@@ -212,7 +222,9 @@ wezterm.on("update-right-status", function(window)
 	else
 		battery_status = "No Battery"
 	end
-	local final_Status = string.format("%s | %s | %s ", title, battery_status, date)
+	battery_status = get_status_field(battery_status, "Black")
+
+	local final_Status = string.format("%s%s%s%s", battery_status, workspace, title, date)
 	window:set_right_status(final_Status)
 end)
 
