@@ -23,17 +23,8 @@ fi
 #     mkdir -p $WEZTERM_DIR
 # fi
 
-# Remove existing nvim directory
-# ALACRITTY_DIR=~/.config/alacritty
-# if [ -d $ALACRITTY_DIR ]; then
-#     echo "Found existing Alacritty config."
-#     rm -rf $ALACRITTY_DIR
-#     echo "Removed existing Alacritty config."
-# fi
-
 # Create symlink for the nvim directory
 ln -sf $DOTFILES_DIR/config/nvim $NVIM_DIR
 # ln -sf $DOTFILES_DIR/config/wezterm/plugins $WEZTERM_DIR
-# ln -sf $DOTFILES_DIR/config/alacritty $ALACRITTY_DIR
 
 echo "Dotfiles synced successfully."
