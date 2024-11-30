@@ -1,7 +1,7 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 local config = {} --wezterm.config_builder()
-local nvim_wez_navigator = require("plugins/nvim-wez-navigator")
+local nvim_wez_navigator = require("plugins.nvim-wez-navigator")
 
 if wezterm.config_builder then
 	config = wezterm.config_builder()
