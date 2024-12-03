@@ -10,7 +10,6 @@ import { exec } from 'child_process';
  */
 export function setNvimTheme(theme, setThemeCallback) {
     try {
-        console.log('inside setNvimTheme function');
         const target =
             path.join(
                 process.env.HOME,
