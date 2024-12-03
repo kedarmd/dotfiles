@@ -190,6 +190,11 @@ local function get_battery_icon(state, status)
 	end
 end
 
+---Returns a formatted status field
+---@param text string
+---@param background string
+---@param prefix_background string
+---@return string
 local function get_status_field(text, background, prefix_background)
 	local prefix_styles = wezterm.format({
 		{ Foreground = { AnsiColor = background } },
