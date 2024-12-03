@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
 
@@ -29,12 +30,28 @@ export function setNvimTheme(theme, setThemeCallback) {
         );
         const source = `${nvimThemesDir}/${theme}.lua`;
         const cb = () => {
-            exec(
-                `nvim --server /tmp/nvim.sock --remote-send ":colorscheme ${theme}<CR>"`,
-            );
+            const servers = getServers();
+            for (const server of servers) {
+                exec(
+                    `nvim --server /tmp/${server} --remote-send ":colorscheme ${theme}<CR>"`,
+                );
+            }
         };
         setThemeCallback(theme, source, target, 'Neovim', cb);
     } catch (error) {
         console.error(`Failed to set Neovim theme: ${error.message}`);
     }
+}
+
+const getServers = () => {
+    const dir = '/tmp';
+    const files = fs.readdirSync(dir);
+    const servers = [];
+    for (const file of files) {
+        if (file.startsWith('nvim-')) {
+            servers.push(file);
+        }
+    }
+    if (servers.length) console.log(`Live nvim servers: ${servers.length}`, servers);
+    return servers;
 }

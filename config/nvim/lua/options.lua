@@ -30,7 +30,8 @@ vim.opt.smartcase = true
 vim.opt.termguicolors = true
 
 -- Enable nvim starting with server
--- vim.fn.serverstart("/tmp/nvim.sock")
+local server_name = "/tmp/nvim-" .. vim.fn.getpid() .. ".sock"
+vim.fn.serverstart(server_name)
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
