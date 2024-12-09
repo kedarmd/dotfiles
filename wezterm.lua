@@ -143,7 +143,8 @@ config.keys = {
 	{ key = "9", mods = "LEADER", action = act.ActivateTab(8) },
 	{ key = "l", mods = "LEADER", action = act.ActivateLastTab },
 }
-for _, keybinding in ipairs(nvim_wez_navigator.keybindings()) do
+local keybindings = nvim_wez_navigator.keybindings()
+for _, keybinding in ipairs(keybindings) do
 	table.insert(config.keys, keybinding)
 end
 
