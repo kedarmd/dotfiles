@@ -1,13 +1,7 @@
 return {
-	"catppuccin/nvim",
-	name = "catppuccin",
-	-- opts = {
-	-- 	transparent_background = true,
-	-- }
+	"folke/tokyonight.nvim",
+	priority = 1000,
 	config = function()
-		-- require('onedark').setup {
-		--     style = 'darker'
-		-- }
-		vim.cmd.colorscheme("catppuccin")
+		vim.cmd.colorscheme("tokyonight-storm")
 	end,
 }
