@@ -28,3 +28,7 @@ ln -sf $DOTFILES_DIR/config/nvim $NVIM_DIR
 # ln -sf $DOTFILES_DIR/config/wezterm/plugins $WEZTERM_DIR
 
 echo "Dotfiles synced successfully."
+
+# Install KMDot CLI
+sudo ln -s ~/development/projects/kmdot-cli/kmdot-cli /usr/local/bin/kmdot
+echo "KMDot CLI installed successfully."
