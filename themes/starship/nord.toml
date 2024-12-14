@@ -38,7 +38,7 @@ format = '[ $symbol($version )]($style)'
 style = "fg:#2e3440 bg:#779F9E"
 
 [deno]
-symbol = ' '
+symbol = 'Deno '
 format = '[ $symbol($version )]($style)'
 style = "fg:#2e3440 bg:#779F9E"
 
