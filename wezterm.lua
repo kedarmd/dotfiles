@@ -23,9 +23,9 @@ config.hide_mouse_cursor_when_typing = false
 config.enable_tab_bar = true
 config.window_decorations = "RESIZE"
 config.window_padding = {
-	left = 4,
-	right = 4,
-	top = 0,
+	left = 0,
+	right = 0,
+	top = 5,
 	bottom = 0,
 }
 
@@ -155,6 +155,9 @@ wezterm.on("format-tab-title", function(tab)
 	local active_pane = tab.active_pane
 	if active_pane then
 		local cwd = active_pane.current_working_dir
+		if not cwd then
+			return tab.tab_title
+		end
 		local path = cwd.file_path
 		local last_dir = path:match(".*/(.*)")
 		return " " .. tab.tab_index + 1 .. ": " .. last_dir .. " "
@@ -162,11 +165,11 @@ wezterm.on("format-tab-title", function(tab)
 	return tab.tab_title
 end)
 
-local function get_styled_icon(icon, color)
+local function get_styled_icon(icon)
 	local styled_icon = string.format(
 		"%s",
 		wezterm.format({
-			{ Foreground = { AnsiColor = color } },
+			{ Foreground = { AnsiColor = "White" } },
 			{ Text = icon },
 		})
 	)
@@ -175,45 +178,48 @@ end
 
 local function get_battery_icon(state, status)
 	if state < 20 then
-		return get_styled_icon(status == "Charging" and "󰂄" or "󰁻", status == "Charging" and "Green" or "Red")
+		return get_styled_icon(status == "Charging" and "󰂄" or "󰁻")
 	elseif state < 40 then
-		return get_styled_icon(status == "Charging" and "󰂄" or "󰁽", status == "Charging" and "Green" or "Yellow")
+		return get_styled_icon(status == "Charging" and "󰂄" or "󰁽")
 	elseif state < 60 then
-		return get_styled_icon(status == "Charging" and "󰂄" or "󰁾", status == "Charging" and "Green" or "White")
+		return get_styled_icon(status == "Charging" and "󰂄" or "󰁾")
 	elseif state < 80 then
-		return get_styled_icon(status == "Charging" and "󰂄" or "󰂁", status == "Charging" and "Green" or "White")
+		return get_styled_icon(status == "Charging" and "󰂄" or "󰂁")
 	elseif state < 90 then
-		return get_styled_icon(status == "Charging" and "󰂄" or "󰂂", status == "Charging" and "Green" or "White")
+		return get_styled_icon(status == "Charging" and "󰂄" or "󰂂")
 	elseif state == 100 then
-		return get_styled_icon("󰂄", "Green")
+		return get_styled_icon("󰂄")
 	else
-		return get_styled_icon(status == "Charging" and "󰂄" or "󰁹", status == "Charging" and "Green" or "Blue")
+		return get_styled_icon(status == "Charging" and "󰂄" or "󰁹")
 	end
 end
 
 ---Returns a formatted status field
 ---@param text string
 ---@param background string
----@param prefix_background string | nil
 ---@return string
-local function get_status_field(text, background, prefix_background)
-	local prefix_styles = wezterm.format({
+local function get_status_field(text, background, icon)
+	local pre = wezterm.format({
 		{ Foreground = { AnsiColor = background } },
 		{ Text = "" },
 	})
-	if prefix_background ~= nil then
-		prefix_styles = wezterm.format({
-			{ Background = { AnsiColor = prefix_background } },
-			{ Foreground = { AnsiColor = background } },
-			{ Text = "" },
-		})
-	end
+	local post = wezterm.format({
+		{ Foreground = { AnsiColor = background } },
+		{ Text = "█" },
+	})
+	local icon_styles = wezterm.format({
+		{ Foreground = { AnsiColor = "Black" } },
+		{ Background = { AnsiColor = background } },
+		{ Text = icon },
+	})
+
 	return string.format(
-		"%s%s",
-		prefix_styles,
+		"%s%s%s%s",
+		pre,
+		icon_styles,
+		post,
 		wezterm.format({
-			{ Background = { AnsiColor = background } },
-			{ Foreground = { AnsiColor = "Black" } },
+			{ Foreground = { AnsiColor = "White" } },
 			{ Text = " " .. text .. " " },
 		})
 	)
@@ -221,25 +227,21 @@ end
 
 wezterm.on("update-right-status", function(window)
 	-- Get the current date in the desired format
-	local date = get_status_field(wezterm.strftime("%d/%m/%Y - %I:%M %p"), "Red", "Green") -- Indian date format with 12-hour time
+	local date = get_status_field(wezterm.strftime("%d/%m/%Y %I:%M %p"), "Fuchsia", "󰃰") -- Indian date format with 12-hour time
 	-- Set it as the right status
 	local pane = window:active_pane()
-	local title = get_status_field(pane:get_title(), "Green", "Blue")
+	local title = get_status_field(pane:get_title(), "Blue", "󰄨")
 	local battery_info = wezterm.battery_info()
 	local battery_status = ""
-	local workspace = get_status_field(window:active_workspace(), "Blue", "Black")
+	local workspace = get_status_field(window:active_workspace(), "Aqua", "")
 
-	if #battery_info > 0 then
-		local battery = battery_info[1] -- Assuming single battery; use a loop if multiple.
-		local state = battery.state_of_charge * 100
-		local status = battery.state
+	local battery = battery_info[1] -- Assuming single battery; use a loop if multiple.
+	local state = battery.state_of_charge * 100
+	local status = battery.state
 
-		local battery_icon = get_battery_icon(state, status)
-		battery_status = string.format("%s %.0f%%", battery_icon, state)
-	else
-		battery_status = "No Battery"
-	end
-	battery_status = get_status_field(battery_status, "Black")
+	local battery_icon = get_battery_icon(state, status)
+	battery_status = string.format("%.0f%%", state)
+	battery_status = get_status_field(battery_status, "Grey", battery_icon)
 
 	local final_Status = string.format("%s%s%s%s", battery_status, workspace, title, date)
 	window:set_right_status(final_Status)
@@ -249,7 +251,7 @@ wezterm.on("update-status", function(window)
 	local is_leader_active = window:leader_is_active()
 	local function right_status(color)
 		local extra = string.format(
-			"%s%s",
+			"%s",
 			-- wezterm.format({
 			-- 	{ Foreground = { AnsiColor = color } },
 			-- 	{ Text = "" },
@@ -257,12 +259,12 @@ wezterm.on("update-status", function(window)
 			wezterm.format({
 				{ Background = { AnsiColor = color } },
 				{ Foreground = { AnsiColor = "Black" } },
-				{ Text = " >_" },
-			}),
-			wezterm.format({
-				{ Foreground = { AnsiColor = color } },
-				{ Text = "" },
+				{ Text = " >_ " },
 			})
+			-- wezterm.format({
+			-- 	{ Foreground = { AnsiColor = color } },
+			-- 	{ Text = "" },
+			-- })
 		)
 		return extra
 	end
