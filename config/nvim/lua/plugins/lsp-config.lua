@@ -8,8 +8,6 @@ return {
 
 		-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
 		{ "j-hui/fidget.nvim", opts = {} },
-
-		"hrsh7th/cmp-nvim-lsp",
 	},
 	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -69,8 +67,8 @@ return {
 			end,
 		})
 
-		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+		local capabilities = require("blink.cmp").get_lsp_capabilities()
+		require("lspconfig").lua_ls.setup({ capabilites = capabilities })
 
 		local servers = {
 			-- Some languages (like typescript) have entire language plugins that can be useful:
