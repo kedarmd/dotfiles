@@ -37,6 +37,6 @@ return {
 		-- Keybinding for Lazygit
 		vim.api.nvim_set_keymap("n", "<leader>lg", "<cmd>lua lazygit_toggle()<CR>", { noremap = true, silent = true })
 		-- Exit terminal mode
-		vim.api.nvim_set_keymap("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
+		-- vim.api.nvim_set_keymap("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
 	end,
 }
