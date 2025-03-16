@@ -247,32 +247,32 @@ wezterm.on("update-right-status", function(window)
 	window:set_right_status(final_Status)
 end)
 
-wezterm.on("update-status", function(window)
-	local is_leader_active = window:leader_is_active()
-	local function right_status(color)
-		local extra = string.format(
-			"%s",
-			-- wezterm.format({
-			-- 	{ Foreground = { AnsiColor = color } },
-			-- 	{ Text = "" },
-			-- }),
-			wezterm.format({
-				{ Background = { AnsiColor = color } },
-				{ Foreground = { AnsiColor = "Black" } },
-				{ Text = " >_ " },
-			})
-			-- wezterm.format({
-			-- 	{ Foreground = { AnsiColor = color } },
-			-- 	{ Text = "" },
-			-- })
-		)
-		return extra
-	end
-	if is_leader_active then
-		window:set_left_status(right_status("Red"))
-	else
-		window:set_left_status(right_status("Green"))
-	end
-end)
+-- wezterm.on("update-status", function(window)
+-- 	local is_leader_active = window:leader_is_active()
+-- 	local function right_status(color)
+-- 		local extra = string.format(
+-- 			"%s",
+-- 			-- wezterm.format({
+-- 			-- 	{ Foreground = { AnsiColor = color } },
+-- 			-- 	{ Text = "" },
+-- 			-- }),
+-- 			wezterm.format({
+-- 				{ Background = { AnsiColor = color } },
+-- 				{ Foreground = { AnsiColor = "Black" } },
+-- 				{ Text = " >_ " },
+-- 			})
+-- 			-- wezterm.format({
+-- 			-- 	{ Foreground = { AnsiColor = color } },
+-- 			-- 	{ Text = "" },
+-- 			-- })
+-- 		)
+-- 		return extra
+-- 	end
+-- 	if is_leader_active then
+-- 		window:set_left_status(right_status("Red"))
+-- 	else
+-- 		window:set_left_status(right_status("Green"))
+-- 	end
+-- end)
 
 return config
