@@ -245,6 +245,14 @@ local function get_status_field(text, background, icon)
 	)
 end
 
+local function get_leader_status_color(is_active)
+	if is_active then
+		return "Red"
+	else
+		return "Aqua"
+	end
+end
+
 wezterm.on("update-right-status", function(window)
 	-- Get the current date in the desired format
 	local date = get_status_field(wezterm.strftime("%d/%m/%Y %I:%M %p"), "Fuchsia", "󰃰") -- Indian date format with 12-hour time
@@ -253,7 +261,9 @@ wezterm.on("update-right-status", function(window)
 	local title = get_status_field(pane:get_title(), "Blue", "󰄨")
 	local battery_info = wezterm.battery_info()
 	local battery_status = ""
-	local workspace = get_status_field(window:active_workspace(), "Aqua", "")
+	local is_leader_active = window:leader_is_active() or false
+	local workspace_color = get_leader_status_color(is_leader_active)
+	local workspace = get_status_field(window:active_workspace(), workspace_color, "")
 
 	local battery = battery_info[1] -- Assuming single battery; use a loop if multiple.
 	local state = battery.state_of_charge * 100
@@ -266,33 +276,5 @@ wezterm.on("update-right-status", function(window)
 	local final_Status = string.format("%s%s%s%s", battery_status, workspace, title, date)
 	window:set_right_status(final_Status)
 end)
-
--- wezterm.on("update-status", function(window)
--- 	local is_leader_active = window:leader_is_active()
--- 	local function right_status(color)
--- 		local extra = string.format(
--- 			"%s",
--- 			-- wezterm.format({
--- 			-- 	{ Foreground = { AnsiColor = color } },
--- 			-- 	{ Text = "" },
--- 			-- }),
--- 			wezterm.format({
--- 				{ Background = { AnsiColor = color } },
--- 				{ Foreground = { AnsiColor = "Black" } },
--- 				{ Text = " >_ " },
--- 			})
--- 			-- wezterm.format({
--- 			-- 	{ Foreground = { AnsiColor = color } },
--- 			-- 	{ Text = "" },
--- 			-- })
--- 		)
--- 		return extra
--- 	end
--- 	if is_leader_active then
--- 		window:set_left_status(right_status("Red"))
--- 	else
--- 		window:set_left_status(right_status("Green"))
--- 	end
--- end)
 
 return config
