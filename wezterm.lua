@@ -132,6 +132,26 @@ config.keys = {
 			end),
 		}),
 	},
+	{
+		key = "r",
+		mods = "LEADER",
+		action = act.PromptInputLine({
+			description = wezterm.format({
+				{ Attribute = { Intensity = "Bold" } },
+				{ Foreground = { AnsiColor = "Fuchsia" } },
+				{ Text = "Enter new name for workspace" },
+			}),
+			action = wezterm.action_callback(function(_, pane, line)
+				if line then
+					local new_pane = pane:split({
+						direction = "Bottom",
+						size = 0.1,
+					})
+					new_pane:send_paste("wezterm cli rename-workspace " .. line .. "\nexit\n")
+				end
+			end),
+		}),
+	},
 	{ key = "1", mods = "LEADER", action = act.ActivateTab(0) },
 	{ key = "2", mods = "LEADER", action = act.ActivateTab(1) },
 	{ key = "3", mods = "LEADER", action = act.ActivateTab(2) },
