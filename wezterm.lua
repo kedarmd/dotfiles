@@ -143,11 +143,16 @@ config.keys = {
 			}),
 			action = wezterm.action_callback(function(_, pane, line)
 				if line then
-					local new_pane = pane:split({
+					pane:split({
 						direction = "Bottom",
 						size = 0.1,
+						args = {
+							"wezterm",
+							"cli",
+							"rename-workspace",
+							line,
+						},
 					})
-					new_pane:send_paste("wezterm cli rename-workspace " .. line .. "\nexit\n")
 				end
 			end),
 		}),
