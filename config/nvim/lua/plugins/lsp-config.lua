@@ -80,10 +80,10 @@ return {
 				single_file_support = false,
 			},
 
-			denols = {
-				root_dir = require("lspconfig").util.root_pattern("deno.json"),
-				capabilities = capabilities,
-			},
+			-- denols = {
+			-- 	root_dir = require("lspconfig").util.root_pattern("deno.json"),
+			-- 	capabilities = capabilities,
+			-- },
 
 			lua_ls = {
 				-- cmd = {...},

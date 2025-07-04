@@ -5,18 +5,17 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local lint = require("lint")
-			local function get_linter_for_attached_lsp()
-				for _, client in pairs(vim.lsp.buf_get_clients(0)) do
-					if client.name == "ts_ls" then
-						return "eslint"
-					elseif client.name == "denols" then
-						return "denols"
-					end
-				end
-			end
+			-- local function get_linter_for_attached_lsp()
+			-- 	for _, client in pairs(vim.lsp.buf_get_clients(0)) do
+			-- 		if client.name == "ts_ls" then
+			-- 			return "eslint"
+			-- 		end
+			-- 	end
+			-- end
 			lint.linters_by_ft = {
 				-- markdown = { 'markdownlint' },
-				typescript = { get_linter_for_attached_lsp() },
+				-- typescript = { get_linter_for_attached_lsp() },
+				typescript = { "eslint" },
 				typescriptreact = { "eslint" },
 			}
 
