@@ -181,7 +181,7 @@ wezterm.on("format-tab-title", function(tab)
 	if active_pane then
 		local cwd = active_pane.current_working_dir
 		if not cwd then
-			return tab.tab_title
+			return tab.tab_index + 1 .. ": Home "
 		end
 		local path = cwd.file_path
 		local last_dir = path:match(".*/(.*)")
