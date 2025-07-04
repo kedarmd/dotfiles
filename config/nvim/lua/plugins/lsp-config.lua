@@ -104,19 +104,24 @@ return {
 		-- Custom Icons for displaying diagnostic signs
 		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 
-		for type, icon in pairs(signs) do
-			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-		end
 
 		vim.diagnostic.config({
-			virtual_text = false,
-			signs = true,
+			 signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = signs.Error,
+            [vim.diagnostic.severity.WARN] = signs.Warn,
+            [vim.diagnostic.severity.HINT] = signs.Hint,
+            [vim.diagnostic.severity.INFO] = signs.Info,
+        },
+    },
+			virtual_text = {
+				prefix = '●', -- Could be '●', '▎', 'x'
+				spacing = 4,
+			},
 			underline = true,
 			update_in_insert = false,
 			severity_sort = true,
 		})
-
 		require("mason").setup()
 
 		-- You can add other tools here that you want Mason to install
