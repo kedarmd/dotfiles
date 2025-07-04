@@ -14,6 +14,14 @@ if [ -d $NVIM_DIR ]; then
     echo "Removed existing nvim config."
 fi
 
+# Remove existing rofi directory
+ROFI_DIR=~/.config/rofi
+if [ -d $ROFI_DIR ]; then
+    echo "Found existing rofi config."
+    rm -rf $ROFI_DIR
+    echo "Removed existing rofi config."
+fi
+
 # WEZTERM_DIR=~/.config/wezterm/plugins
 # if [ -d $WEZTERM_DIR ]; then
 #     echo "Found existing WezTerm config."
@@ -25,6 +33,7 @@ fi
 
 # Create symlink for the nvim directory
 ln -sf $DOTFILES_DIR/config/nvim $NVIM_DIR
+ln -sf $DOTFILES_DIR/config/rofi $ROFI_DIR
 # ln -sf $DOTFILES_DIR/config/wezterm/plugins $WEZTERM_DIR
 
 echo "Dotfiles synced successfully."
