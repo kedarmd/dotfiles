@@ -20,6 +20,8 @@ window {
   border: 2px;
   border-color: @border-color;
   background-color: @background;
+  fullscreen: true;
+  margin: 25%;
 }
 
 mainbox {
@@ -49,7 +51,6 @@ entry {
 
 listview {
   lines: 10;
-  fixed-height: false;
   padding: 4px 0px;
   spacing: 6px;
   scrollbar: false;
