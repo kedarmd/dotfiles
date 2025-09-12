@@ -29,6 +29,17 @@ config.window_padding = {
 	bottom = 0,
 }
 
+config.window_frame = {
+	border_left_width = "1px",
+	border_right_width = "1px",
+	border_bottom_height = "1px",
+	border_top_height = "1px",
+	border_left_color = "Black",
+	border_right_color = "Black",
+	border_bottom_color = "Black",
+	border_top_color = "Black",
+}
+
 -- config.window_background_opacity = 0.9
 -- config.text_background_opacity = 1
 
