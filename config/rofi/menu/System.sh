@@ -1,20 +1,24 @@
 #!/usr/bin/env bash
 
-options=" Shutdown\n Restart\n Suspend\n Logout"
+shutdown=" Shutdown"
+restart=" Restart"
+suspend=" Suspend"
+logout=" Logout"
+options="$shutdown\n$restart\n$suspend\n$logout"
 
 choice=$(echo -e $options | rofi -dmenu -normal-window -i -p "System")
 
 case $choice in
-  " Shutdown")
+  "$shutdown")
     systemctl poweroff
     ;;
-  " Restart")
+  "$restart")
     systemctl reboot
     ;;
-  " Suspend")
+  "$suspend")
     systemctl suspend
     ;;
-  " Logout")
+  "$logout")
     bspc quit
     ;;
 esac
