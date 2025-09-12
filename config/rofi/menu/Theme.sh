@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+tokyonight="🌃 Tokyonight"
+catppuccin="🐱 Catppuccin"
+onedark="🌙 Onedark"
+nord="🌲 Nord"
+options="$tokyonight\n$catppuccin\n$onedark\n$nord"
+
+choice=$(echo -e $options | rofi -dmenu -normal-window -i -p "Theme")
+
+case $choice in
+  "$tokyonight")
+    kmdot -t tokyonight
+    ;;
+  "$catppuccin")
+    kmdot -t catppuccin
+    ;;
+  "$onedark")
+    kmdot -t onedark
+    ;;
+  "$nord")
+    kmdot -t nord
+    ;;
+esac

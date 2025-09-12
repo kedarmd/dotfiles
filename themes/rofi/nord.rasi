@@ -55,17 +55,8 @@ listview {
   lines: 10;
   padding: 4px 0px;
   spacing: 6px;
-  scrollbar: true;
+  scrollbar: false;
   background-color: @background;
-}
-
-scrollbar {
-  width: 6px;
-  padding: 2px;
-  handle-color: @selected;
-  background-color: @background-alt;
-  border: 0px;
-  border-radius: 4px;
 }
 
 element {
