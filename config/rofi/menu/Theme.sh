@@ -9,10 +9,10 @@ choice=$(echo -e $options | rofi -dmenu -normal-window -i -p "Theme")
 
 case $choice in
   "$tokyonight")
-    kmdot -t tokyonight
+    kmdot -t tokyonight -v storm
     ;;
   "$catppuccin")
-    kmdot -t catppuccin
+    kmdot -t catppuccin -v mocha
     ;;
   "$onedark")
     kmdot -t onedark
