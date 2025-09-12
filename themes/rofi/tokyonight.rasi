@@ -1,0 +1,100 @@
+* {
+  font: "JetBrainsMono Nerd Font 12";
+
+  background: #1a1b26;
+  background-alt: #1f2335;
+  foreground: #c0caf5;
+  selected: #7aa2f7;
+  selected-foreground: #1a1b26;
+  background-secondary: #3d59a1;
+
+  border-color: #414868;
+  separatorcolor: #414868;
+
+  border-radius: 6px;
+  padding: 8px;
+  spacing: 6px;
+}
+
+window {
+  width: 100%;
+  height: 90%;
+  border: 2px;
+  border-color: @border-color;
+  background-color: @background;
+  fullscreen: false;
+  margin: 188px 450px 188px 450px;
+}
+
+mainbox {
+  children: [inputbar, listview];
+  spacing: 10px;
+  background-color: @background;
+}
+
+inputbar {
+  background-color: @background-alt;
+  border: 1px;
+  border-color: @border-color;
+  padding: 6px;
+  children: [prompt, entry];
+}
+
+prompt {
+  padding: 8px;
+  text-color: @foreground;
+  background-color: @background-secondary; 
+}
+
+entry {
+  text-color: @foreground;
+  background-color: inherit;
+}
+
+listview {
+  lines: 10;
+  padding: 4px 0px;
+  spacing: 6px;
+  scrollbar: true;
+  background-color: @background;
+}
+
+scrollbar {
+  width: 6px;
+  padding: 2px;
+  handle-color: @selected;
+  background-color: @background-alt;
+  border: 0px;
+  border-radius: 4px;
+}
+
+element {
+  padding: 6px;
+  text-color: @foreground;
+  background-color: @background-alt;
+  border-radius: 4px;
+}
+
+element-icon {
+  background-color: @background-alt;
+  padding: 6px;
+}
+
+element-text {
+  background-color: @background-alt;
+  text-color: @foreground;
+}
+
+element selected {
+  background-color: @selected;
+  text-color: @selected-foreground;
+}
+
+element-icon selected {
+  background-color: @selected;
+}
+
+element-text selected {
+  background-color: @selected;
+  text-color: @selected-foreground;
+}

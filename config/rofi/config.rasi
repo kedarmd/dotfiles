@@ -4,4 +4,4 @@ configuration {
     terminal: "wezterm"; 
 }
 
-@theme "tokyonight.rasi"
+@theme "theme.rasi"
