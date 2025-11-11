@@ -1,5 +1,4 @@
 return {
-	-- Main LSP Configuration
 	"neovim/nvim-lspconfig",
 	dependencies = {
 		{ "williamboman/mason.nvim", config = true }, -- NOTE: Must be loaded before dependants
@@ -10,6 +9,7 @@ return {
 		{ "j-hui/fidget.nvim", opts = {} },
 	},
 	config = function()
+		-- The LspAttach Autocmd remains unchanged and is correctly set up.
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 			callback = function(event)
@@ -17,20 +17,16 @@ return {
 					mode = mode or "n"
 					vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 				end
-				map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-				map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-				map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-				map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-				map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-				map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+				-- map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+				-- map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+				-- map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+				-- map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
+				-- map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+				-- map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 				map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
 				map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
 				map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
-				-- The following two autocommands are used to highlight references of the
-				-- word under your cursor when your cursor rests there for a little while.
-				--    See `:help CursorHold` for information about when this is executed
-				-- When you move your cursor, the highlights will be cleared (the second autocommand).
 				local client = vim.lsp.get_client_by_id(event.data.client_id)
 				if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
 					local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
@@ -55,10 +51,6 @@ return {
 					})
 				end
 
-				-- The following code creates a keymap to toggle inlay hints in your
-				-- code, if the language server you are using supports them
-				--
-				-- This may be unwanted, since they displace some of your code
 				if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
 					map("<leader>th", function()
 						vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
@@ -68,40 +60,25 @@ return {
 		})
 
 		local capabilities = require("blink.cmp").get_lsp_capabilities()
-		require("lspconfig").lua_ls.setup({ capabilites = capabilities })
 
 		local servers = {
-			-- Some languages (like typescript) have entire language plugins that can be useful:
-			--    https://github.com/pmizio/typescript-tools.nvim
-			-- But for many setups, the LSP (`ts_ls`) will work just fine
 			ts_ls = {
 				root_dir = require("lspconfig").util.root_pattern("package.json"),
 				capabilities = capabilities,
 				single_file_support = false,
 			},
 
-			-- denols = {
-			-- 	root_dir = require("lspconfig").util.root_pattern("deno.json"),
-			-- 	capabilities = capabilities,
-			-- },
-
 			lua_ls = {
-				-- cmd = {...},
-				-- filetypes = { ...},
-				-- capabilities = {},
 				settings = {
 					Lua = {
 						completion = {
 							callSnippet = "Replace",
 						},
-						-- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-						-- diagnostics = { disable = { 'missing-fields' } },
 					},
 				},
 			},
 		}
 
-		-- Custom Icons for displaying diagnostic signs
 		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 
 		vim.diagnostic.config({
@@ -121,10 +98,9 @@ return {
 			update_in_insert = false,
 			severity_sort = true,
 		})
+
 		require("mason").setup()
 
-		-- You can add other tools here that you want Mason to install
-		-- for you, so that they are available from within Neovim.
 		local ensure_installed = vim.tbl_keys(servers or {})
 		vim.list_extend(ensure_installed, {
 			"stylua", -- Used to format Lua code
@@ -132,14 +108,23 @@ return {
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 		require("mason-lspconfig").setup({
+			-- FIX 2: Change the handler function to use vim.lsp.config/enable
 			handlers = {
 				function(server_name)
-					local server = servers[server_name] or {}
-					-- This handles overriding only values explicitly passed
-					-- by the server configuration above. Useful when disabling
-					-- certain features of an LSP (for example, turning off formatting for ts_ls)
-					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-					require("lspconfig")[server_name].setup(server)
+					-- 1. Get custom config (if any)
+					local server_config = servers[server_name] or {}
+
+					-- 2. Force merge capabilities (this logic remains correct)
+					server_config.capabilities =
+						vim.tbl_deep_extend("force", {}, capabilities, server_config.capabilities or {})
+
+					-- 3. Use the new API: vim.lsp.config to define the settings
+					vim.lsp.config(server_name, server_config)
+
+					-- 4. Use the new API: vim.lsp.enable to start the server
+					-- mason-lspconfig will handle starting the server via a default handler if none is provided.
+					-- When providing a custom handler, the recommended action is to use the core API.
+					vim.lsp.enable({ server_name })
 				end,
 			},
 		})
