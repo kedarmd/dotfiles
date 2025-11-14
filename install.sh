@@ -1,6 +1,6 @@
 #!/bin/bash
-
-DOTFILES_DIR=~/development/dotfiles
+SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+DOTFILES_DIR="$SCRIPT_DIR"
 
 ln -sf $DOTFILES_DIR/zshrc ~/.zshrc
 ln -sf $DOTFILES_DIR/tmux.conf ~/.tmux.conf
