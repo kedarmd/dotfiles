@@ -8,14 +8,14 @@ if wezterm.config_builder then
 end
 
 -- Color Scheme
-local themefile = dofile(wezterm.config_dir .. "/development/dotfiles/wezterm-theme.lua")
+local themefile = dofile("./.config/wezterm/wezterm-theme.lua")
 config.color_scheme = themefile
 
 -- Font
-config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "Regular" })
-config.font_size = 10.5
-config.line_height = 1.20
-config.cell_width = 1.05
+config.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular" })
+config.font_size = 12
+config.line_height = 1.25
+config.cell_width = 1
 
 config.hide_mouse_cursor_when_typing = false
 
@@ -25,7 +25,7 @@ config.window_decorations = "RESIZE"
 config.window_padding = {
 	left = 0,
 	right = 0,
-	top = 5,
+	top = 0,
 	bottom = 0,
 }
 
@@ -150,7 +150,7 @@ config.keys = {
 			description = wezterm.format({
 				{ Attribute = { Intensity = "Bold" } },
 				{ Foreground = { AnsiColor = "Fuchsia" } },
-				{ Text = "Enter new name for workspace" },
+				{ Text = "Update current workspace name" },
 			}),
 			action = wezterm.action_callback(function(_, pane, line)
 				if line then
@@ -270,14 +270,14 @@ local function get_leader_status_color(is_active)
 end
 
 wezterm.on("update-right-status", function(window)
-	local date = get_status_field(wezterm.strftime("%d/%m/%Y %I:%M %p"), "Fuchsia", "󰃰") -- Indian date format with 12-hour time
+	-- local date = get_status_field(wezterm.strftime("%d/%m/%Y %I:%M %p"), "Fuchsia", " 󰃰 ") -- Indian date format with 12-hour time
 	local pane = window:active_pane()
-	local title = get_status_field(pane:get_title(), "Blue", "󰄨")
+	local title = get_status_field(pane:get_title(), "Blue", " 󰄨 ")
 	local battery_info = wezterm.battery_info()
 	local battery_status = ""
 	local is_leader_active = window:leader_is_active() or false
 	local workspace_color = get_leader_status_color(is_leader_active)
-	local workspace = get_status_field(window:active_workspace(), workspace_color, "")
+	local workspace = get_status_field(window:active_workspace(), workspace_color, "  ")
 
 	local battery = battery_info[1] -- Assuming single battery; use a loop if multiple.
 	local state = battery.state_of_charge * 100
@@ -287,7 +287,7 @@ wezterm.on("update-right-status", function(window)
 	battery_status = string.format("%.0f%%", state)
 	battery_status = get_status_field(battery_status, "Grey", battery_icon)
 
-	local final_Status = string.format("%s%s%s%s", battery_status, workspace, title, date)
+	local final_Status = string.format("%s%s%s", battery_status, workspace, title)
 	window:set_right_status(final_Status)
 end)
 
