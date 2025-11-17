@@ -1,1 +1,1 @@
-return "One Dark (Gogh)"
+return "OneDark (base16)"
