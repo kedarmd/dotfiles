@@ -65,6 +65,7 @@ Arch = '  '
 Fedora = '  '
 Ubuntu = '  '
 Macos = '  '
+Pop = '  '
 
 [shell]
 disabled = false
